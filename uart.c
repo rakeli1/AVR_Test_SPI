@@ -29,7 +29,7 @@ void uart_SendChar(char simbol)
 {
 	while(!(UCSRA & (1 << UDRE)));
 	UDR = simbol;
-	_delay_ms(5);
+	_delay_ms(2);
 }
 
 uint8_t uart_SendCharHex(uint8_t value)
@@ -64,10 +64,22 @@ void uart_SendHex8(uint8_t value)
 	
 	while(!(UCSRA & (1 << UDRE)));
 	UDR = uart_SendCharHex(Htetr);
-	_delay_ms(2);
+	_delay_ms(2);                   // эта задержка уберется после того как поставится внешний кварц
 	while(!(UCSRA & (1 << UDRE)));
 	UDR = uart_SendCharHex(Ltetr);
+	_delay_ms(2);                   // эта задержка уберется после того как поставится внешний кварц
+	
+}
+
+void uart_SendHex32(uint32_t value)
+{
+	uart_SendHex8((uint8_t)(value >> 24));
 	_delay_ms(2);
-	_delay_ms(500);
+	uart_SendHex8((uint8_t)(value >> 16));
+	_delay_ms(2);
+	uart_SendHex8((uint8_t)(value >> 8));
+	_delay_ms(2);
+	uart_SendHex8((uint8_t)value);
+	_delay_ms(2);
 }
  

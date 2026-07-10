@@ -17,6 +17,7 @@ void uart_SendChar(char simbol);
 
 uint8_t uart_SendCharHex(uint8_t value); 
 void uart_SendHex8(uint8_t value);
+void uart_SendHex32(uint32_t value);
 
 
 
